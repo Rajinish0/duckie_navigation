@@ -1,0 +1,1 @@
+Navigation node for duckietown

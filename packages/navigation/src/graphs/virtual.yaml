@@ -1,0 +1,22 @@
+nodes:
+  - {name: A, x: 0.2925, y: 1.4625} # left mid intersection
+  - {name: B, x: 1.4625, y: 1.4625} # mid intersection 
+  - {name: C, x: 2.6325, y: 1.4625} # right mid interesction
+  - {name: D, x: 1.4625, y: 3.2175} # top interesction 
+  - {name: E, x: 0.2925, y: 0.2925, is_phantom: true} # bottom left phantom
+  - {name: F, x: 0.2925, y: 3.2175, is_phantom: true} # top left phantom
+  - {name: G, x: 2.6325, y: 3.2175, is_phantom: true} # top right phantom
+  - {name: H, x: 2.6325, y: 0.2925, is_phantom: true} # bottom right phantom
+  - {name: I, x: 1.4625, y: 0.2925, is_phantom: true} # bottom mid phantom
+edges:
+  - {from: A, to: B, direction: E, distance: 1.17}
+  - {from: B, to: C, direction: E, distance: 1.17}
+  - {from: A, to: E, direction: S, distance: 1.17}
+  - {from: B, to: I, direction: S, distance: 1.17}
+  - {from: E, to: I, direction: E, distance: 1.17}
+  - {from: C, to: H, direction: S, distance: 1.17}
+  - {from: C, to: G, direction: N, distance: 1.755}
+  - {from: A, to: F, direction: N, distance: 1.755}
+  - {from: D, to: F, direction: W, distance: 1.17}
+  - {from: D, to: G, direction: E, distance: 1.17}
+  - {from: D, to: B, direction: S, distance: 1.755}

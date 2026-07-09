@@ -1,0 +1,11 @@
+<package>
+  <name>navigation</name>
+  <version>0.0.1</version>
+  <description>
+  HEHE
+  </description>
+  <maintainer email="finn@springorum.de">Finn Springorum</maintainer>
+  <license>None</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

@@ -1,0 +1,11 @@
+TILE_SIZE_X = 0.585 # in meters
+TILE_SIZE_Y = 0.585 # in meters
+NUM_TILES_X = 5
+NUM_TILES_Y = 6
+
+SCALE_X     = 0.009
+SCALE_Y     = 0.009
+OFFSET_X    = 0.0
+OFFSET_Y    = 0.0
+NAV_START_NODE = "A"
+NAV_START_HEADING = "N"

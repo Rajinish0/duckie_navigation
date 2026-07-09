@@ -1,0 +1,12 @@
+<launch>
+    <!-- <arg name="pkg_name" default="navigation" doc="name of the package"/> -->
+    <!-- <arg name="veh" doc="Name of vehicle. ex: megaman"/> -->
+
+    <!-- <group ns="$(arg veh)"> -->
+    <node pkg="navigation" type="navigation_node.py" name="navigation" output="screen">
+    <rosparam command="load" file="$(find navigation)/config/default.yaml"/>
+    <rosparam command="load" file="$(find navigation)/src/map.yaml"/>
+    <param name="map_file" value="$(find navigation)/src/graphs/virtual.yaml"/>
+    </node>
+    <!-- </group> -->
+</launch>
