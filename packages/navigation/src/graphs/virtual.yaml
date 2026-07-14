@@ -1,22 +1,73 @@
+# nodes:
+#   - {name: A, x: 0.2925, y: 1.4625} # left mid intersection
+#   - {name: B, x: 1.4625, y: 1.4625} # mid intersection 
+#   - {name: C, x: 2.6325, y: 1.4625} # right mid interesction
+#   - {name: D, x: 1.4625, y: 3.2175} # top interesction 
+#   - {name: E, x: 0.2925, y: 0.2925, is_phantom: true} # bottom left phantom
+#   - {name: F, x: 0.2925, y: 3.2175, is_phantom: true} # top left phantom
+#   - {name: G, x: 2.6325, y: 3.2175, is_phantom: true} # top right phantom
+#   - {name: H, x: 2.6325, y: 0.2925, is_phantom: true} # bottom right phantom
+#   - {name: I, x: 1.4625, y: 0.2925, is_phantom: true} # bottom mid phantom
+# edges:
+#   - {from: A, to: B, direction: E, distance: 1.17}
+#   - {from: B, to: C, direction: E, distance: 1.17}
+#   - {from: A, to: E, direction: S, distance: 1.17}
+#   - {from: B, to: I, direction: S, distance: 1.17}
+#   - {from: E, to: I, direction: E, distance: 1.17}
+#   - {from: C, to: H, direction: S, distance: 1.17}
+#   - {from: C, to: G, direction: N, distance: 1.755}
+#   - {from: A, to: F, direction: N, distance: 1.755}
+#   - {from: D, to: F, direction: W, distance: 1.17}
+#   - {from: D, to: G, direction: E, distance: 1.17}
+#   - {from: D, to: B, direction: S, distance: 1.755}
+
+# nodes:
+#   - {name: A, x: 0.2925, y: 1.4625} # left mid intersection
+#   - {name: B, x: 1.4625, y: 1.4625} # mid intersection 
+#   - {name: C, x: 2.6325, y: 1.4625} # right mid interesction
+#   - {name: D, x: 1.4625, y: 3.2175} # top interesction 
+#   - {name: E, x: 0.2925, y: 0.2925, is_phantom: true} # bottom left phantom
+#   - {name: F, x: 0.2925, y: 3.2175, is_phantom: true} # top left phantom
+#   - {name: G, x: 2.6325, y: 3.2175, is_phantom: true} # top right phantom
+#   - {name: H, x: 2.6325, y: 0.2925, is_phantom: true} # bottom right phantom
+#   - {name: I, x: 1.4625, y: 0.2925, is_phantom: true} # bottom mid phantom
+
 nodes:
-  - {name: A, x: 0.2925, y: 1.4625} # left mid intersection
-  - {name: B, x: 1.4625, y: 1.4625} # mid intersection 
-  - {name: C, x: 2.6325, y: 1.4625} # right mid interesction
-  - {name: D, x: 1.4625, y: 3.2175} # top interesction 
-  - {name: E, x: 0.2925, y: 0.2925, is_phantom: true} # bottom left phantom
-  - {name: F, x: 0.2925, y: 3.2175, is_phantom: true} # top left phantom
-  - {name: G, x: 2.6325, y: 3.2175, is_phantom: true} # top right phantom
-  - {name: H, x: 2.6325, y: 0.2925, is_phantom: true} # bottom right phantom
-  - {name: I, x: 1.4625, y: 0.2925, is_phantom: true} # bottom mid phantom
+  - {name: A, x: 0.5, y: 2.5} # left mid intersection
+  - {name: B, x: 2.5, y: 2.5} # mid intersection 
+  - {name: C, x: 4.5, y: 2.5} # right mid interesction
+  - {name: D, x: 2.5, y: 5.5} # top interesction 
+  - {name: E, x: 0.5, y: 0.5, is_phantom: true} # bottom left phantom
+  - {name: F, x: 0.5, y: 5.5, is_phantom: true} # top left phantom
+  - {name: G, x: 4.5, y: 5.5, is_phantom: true} # top right phantom
+  - {name: H, x: 4.5, y: 0.5, is_phantom: true} # bottom right phantom
+  - {name: I, x: 2.5, y: 0.5, is_phantom: true} # bottom mid phantom
+
+
 edges:
-  - {from: A, to: B, direction: E, distance: 1.17}
-  - {from: B, to: C, direction: E, distance: 1.17}
-  - {from: A, to: E, direction: S, distance: 1.17}
-  - {from: B, to: I, direction: S, distance: 1.17}
-  - {from: E, to: I, direction: E, distance: 1.17}
-  - {from: C, to: H, direction: S, distance: 1.17}
-  - {from: C, to: G, direction: N, distance: 1.755}
-  - {from: A, to: F, direction: N, distance: 1.755}
-  - {from: D, to: F, direction: W, distance: 1.17}
-  - {from: D, to: G, direction: E, distance: 1.17}
-  - {from: D, to: B, direction: S, distance: 1.755}
+  - {from: A, to: B, direction: E, distance: 2}
+  - {from: B, to: C, direction: E, distance: 2}
+  - {from: A, to: E, direction: S, distance: 2}
+  - {from: B, to: I, direction: S, distance: 2}
+  - {from: E, to: I, direction: E, distance: 2}
+  - {from: C, to: H, direction: S, distance: 2}
+  - {from: C, to: G, direction: N, distance: 3}
+  - {from: A, to: F, direction: N, distance: 3}
+  - {from: D, to: F, direction: W, distance: 2}
+  - {from: D, to: G, direction: E, distance: 2}
+  - {from: D, to: B, direction: S, distance: 3}
+
+target_coords:
+  - {from: A, to: B, x : 1.0,   y : 2.25}
+  - {from: A, to: F, x : 0.75,  y : 3.0}
+  - {from: A, to: E, x : 0.25,  y : 2.0}
+  - {from: D, to: F, x : 2.0,   y : 5.75}
+  - {from: D, to: G, x : 3.0,   y : 5.25}
+  - {from: D, to: B, x : 2.25,  y : 5.0}
+  - {from: C, to: G, x : 4.75,  y : 3.0}
+  - {from: C, to: B, x : 4.0,   y : 2.75}
+  - {from: C, to: H, x : 4.25,  y : 2.0}
+  - {from: B, to: C, x : 3.0,   y : 2.25}
+  - {from: B, to: D, x : 2.75,  y : 3.0}
+  - {from: B, to: I, x : 2.25,  y : 2.0}
+  - {from: B, to: A, x : 2.0,   y : 2.75}

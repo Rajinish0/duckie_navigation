@@ -23,6 +23,7 @@ from ekf import EKF, wrap_angle
 from odometry_utils import delta_phi, get_odometry
 from map_graph import Direction, load_graph_from_yaml
 from visual_odometry import VisualOdometry
+import config
 
 # Publish the VO debug feed (matched-features image + trajectory image).
 # Purely additive on top of what NavigationNode used to publish.
@@ -90,7 +91,7 @@ class VONavigationNode(DTROS):
         if tag_map_param is None:
             rospy.logerr("No AprilTag map provided (~map)")
             rospy.signal_shutdown("No AprilTag map provided")
-        self.tag_map = {int(k): np.array(v["position"]) for k, v in tag_map_param.items()}
+        self.tag_map = {int(k): np.array([v["position"][0]*config.TILE_SIZE_X, v["position"][1]*config.TILE_SIZE_Y]) for k, v in tag_map_param.items()}
 
         self.apriltag_detector = Detector(
             families="tag36h11", nthreads=1, quad_decimate=2.0,
@@ -100,7 +101,7 @@ class VONavigationNode(DTROS):
         # --- navigation / graph state ---
         self.graph = load_graph_from_yaml(rospy.get_param("~map_file"))
         self.goal_xy = None
-        self.arrival_radius = 0.30
+        self.arrival_radius = 0.40
         self._awaiting_arrival = False
 
         self._process_interval = rospy.Duration(1.0 / 25.0)
@@ -371,18 +372,21 @@ class VONavigationNode(DTROS):
         x, y, theta = self.ekf.q.copy()
 
         self.graph.restore_graph(["START", "GOAL"])
-        start = self.graph.add_node_with_splice("START", x, y)
+        heading = Direction.from_angle(theta)
+        start, forbidden = self.graph.add_start_node_with_splice("START", x, y, heading)
         goal = self.graph.add_node_with_splice("GOAL", gx, gy)
 
-        nodes_seq, edges_seq = self.graph.shortest_path(start, goal)
-        turns = self.graph.path_to_turns(edges_seq, nodes_seq, Direction.from_angle(theta))
+        nodes_seq, edges_seq = self.graph.shortest_path(start, goal, forbidden)
+        # turns_and_coords = self.graph.path_to_turns_and_target_coords(edges_seq, nodes_seq, heading)
+        turns_and_coords = self.graph.path_to_turns(edges_seq, nodes_seq, heading)
 
         self.goal_xy = (gx, gy)
         self._awaiting_arrival = True
         self.arrived_pub.publish(Bool(data=False))
 
-        rospy.loginfo(f"[navigation] path {nodes_seq}, turns={turns}")
-        self.turn_queue_pub.publish(String(data=",".join(turns)))
+        # rospy.loginfo(f"[navigation] path {nodes_seq}, turns={turns}")
+        rospy.loginfo(f"[navigation] path {nodes_seq}, turns={turns_and_coords}")
+        self.turn_queue_pub.publish(String(json.dumps(turns_and_coords)))
         path_world = [[self.graph.nodes[n].x, self.graph.nodes[n].y] for n in nodes_seq]
         self.path_pub.publish(String(json.dumps(path_world)))
         self._publish_status(f"EN_ROUTE to ({gx:.2f}, {gy:.2f}) via {nodes_seq}")

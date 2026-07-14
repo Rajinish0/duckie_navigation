@@ -274,24 +274,47 @@ class NavigationNode(DTROS):
             return
         self._plan_and_publish(gx, gy)
 
-    def _plan_and_publish(self, gx, gy):
-        with self.ekf_lock:
-            x, y, theta = self.ekf.q.copy()
-            print("robot THETA", theta)
+    # def _plan_and_publish(self, gx, gy):
+    #     with self.ekf_lock:
+    #         x, y, theta = self.ekf.q.copy()
+    #         print("robot THETA", theta)
 
-        self.graph.restore_graph(["START", "GOAL"])  # drop any earlier splice
-        start = self.graph.add_node_with_splice("START", x, y)
+    #     self.graph.restore_graph(["START", "GOAL"])  # drop any earlier splice
+    #     heading = Direction.from_angle(theta)
+    #     start = self.graph.add_start_node_with_splice("START", x, y, heading)
+    #     goal = self.graph.add_node_with_splice("GOAL", gx, gy)
+
+    #     nodes_seq, edges_seq = self.graph.shortest_path(start, goal)
+    #     turns = self.graph.path_to_turns(edges_seq, nodes_seq, heading)
+
+    #     self.goal_xy = (gx, gy)
+    #     self._awaiting_arrival = True
+    #     self.arrived_pub.publish(Bool(data=False))
+
+    #     rospy.loginfo(f"[navigation] path {nodes_seq}, turns={turns}")
+    #     self.turn_queue_pub.publish(String(data=",".join(turns)))
+    #     path_world = [[self.graph.nodes[n].x, self.graph.nodes[n].y] for n in nodes_seq]
+    #     self.path_pub.publish(String(json.dumps(path_world)))
+    #     self._publish_status(f"EN_ROUTE to ({gx:.2f}, {gy:.2f}) via {nodes_seq}")
+
+    def _plan_and_publish(self, gx, gy):
+        x, y, theta = self.ekf.q.copy()
+
+        self.graph.restore_graph(["START", "GOAL"])
+        heading = Direction.from_angle(theta)
+        start, forbidden = self.graph.add_start_node_with_splice("START", x, y, heading)
         goal = self.graph.add_node_with_splice("GOAL", gx, gy)
 
-        nodes_seq, edges_seq = self.graph.shortest_path(start, goal)
-        turns = self.graph.path_to_turns(edges_seq, nodes_seq, Direction.from_angle(theta))
+        nodes_seq, edges_seq = self.graph.shortest_path(start, goal, forbidden)
+        turns_and_coords = self.graph.path_to_turns_and_target_coords(edges_seq, nodes_seq, heading)
 
         self.goal_xy = (gx, gy)
         self._awaiting_arrival = True
         self.arrived_pub.publish(Bool(data=False))
 
-        rospy.loginfo(f"[navigation] path {nodes_seq}, turns={turns}")
-        self.turn_queue_pub.publish(String(data=",".join(turns)))
+        # rospy.loginfo(f"[navigation] path {nodes_seq}, turns={turns}")
+        rospy.loginfo(f"[navigation] path {nodes_seq}, turns={turns_and_coords}")
+        self.turn_queue_pub.publish(String(json.dumps(turns_and_coords)))
         path_world = [[self.graph.nodes[n].x, self.graph.nodes[n].y] for n in nodes_seq]
         self.path_pub.publish(String(json.dumps(path_world)))
         self._publish_status(f"EN_ROUTE to ({gx:.2f}, {gy:.2f}) via {nodes_seq}")
