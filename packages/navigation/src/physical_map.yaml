@@ -1,0 +1,32 @@
+map:
+  "66": 
+    position: [0, 0]
+  "65":
+    position: [2.95, 0.05]
+  "61":
+    position: [1.5, 2.0]
+  "34":
+    position: [3, 2]
+  "57":
+    position: [4, 2]
+  "32":
+    position: [5, 2]
+  "10":
+    position: [0, 3]
+  "74":
+    position: [2, 3]
+  "25":
+    position: [3, 3]
+  "33":
+    position: [4, 3]
+  "67":
+    position: [2, 5]
+  "11":
+    position: [3, 5]
+  "27":
+    position: [0, 6]
+  "26":
+    position: [2, 6]
+  "9":
+    position: [5, 6]
+  

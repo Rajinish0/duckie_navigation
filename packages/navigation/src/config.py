@@ -1,5 +1,12 @@
-TILE_SIZE_X = 0.585 # in meters
-TILE_SIZE_Y = 0.585 # in meters
+VIRTUAL = False
+
+if VIRTUAL:
+    TILE_SIZE_X = 0.585 # in meters
+    TILE_SIZE_Y = 0.585 # in meters
+else:
+    TILE_SIZE_X = 0.62 # in meters
+    TILE_SIZE_Y = 0.62 # in meters
+
 NUM_TILES_X = 5
 NUM_TILES_Y = 6
 
